@@ -11,7 +11,10 @@ class ProductControl extends StatelessWidget {
       elevation: 10.0,
       child: Text('Add Product'),
       onPressed: () {
-        addProduct('Sweets');
+        addProduct({
+          'title': 'Chocolate',
+          'image':'assets/food.jpg'
+        });
       },
     );
   }
