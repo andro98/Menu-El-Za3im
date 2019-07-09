@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="fr_samuel"
+        android:label="menu_el_3azim"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
