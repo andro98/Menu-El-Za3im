@@ -8,9 +8,8 @@ import '../models/product.dart';
 import '../scoped-models/main.dart';
 
 class ProductPage extends StatelessWidget {
-  final int productIndex;
-
-  ProductPage(this.productIndex);
+  final Product product;
+  ProductPage(this.product);
 
   _showWarningDialog(BuildContext context) {
     showDialog(
@@ -68,33 +67,35 @@ class ProductPage extends StatelessWidget {
       onWillPop: () {
         print('Back button pressed');
         Navigator.pop(context, false);
-        return Future.value(false); 
+        return Future.value(false);
       },
-      child: ScopedModelDescendant<MainModel>(
-          builder: (BuildContext context, Widget child, MainModel model) {
-        final Product product = model.allProducts[productIndex];
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(product.title),
-            elevation: 10.0,
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(product.image),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: TitleDefault(product.title),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(product.title),
+          elevation: 10.0,
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            FadeInImage(
+              image: NetworkImage(product.image),
+              height: 300.0,
+              fit: BoxFit.cover,
+              placeholder: AssetImage('assets/food.jpg'),
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: TitleDefault(product.title),
+            ),
+            _buildAddressPriceRow(product.price),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                product.description,
+                textAlign: TextAlign.center,
               ),
-              _buildAddressPriceRow(product.price),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  product.description,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              /* Container(
+            ),
+            /* Container(
               padding: EdgeInsets.all(10.0),
               child: RaisedButton(
                 color: Theme.of(context).accentColor,
@@ -102,10 +103,9 @@ class ProductPage extends StatelessWidget {
                 onPressed: () => _showWarningDialog(context),
               ),
             ),*/
-            ],
-          ),
-        );
-      }),
+          ],
+        ),
+      ),
     );
   }
 }
